@@ -38,83 +38,89 @@ class _LogInState extends State<LogIn> {
       ),
       body: Builder(
         builder: (context) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(padding: EdgeInsets.only(top: 50)),
-                Center(
-                  child: Image(
-                    image: AssetImage('image/calendar.png'),
-                    width: 170.0,
-                    height: 190.0,
+          return GestureDetector(
+            onTap: (){
+              FocusScope.of(context).unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(padding: EdgeInsets.only(top: 50)),
+                  Center(
+                    child: Image(
+                      image: AssetImage('image/calendar.png'),
+                      width: 170.0,
+                      height: 190.0,
+                    ),
                   ),
-                ),
-                Form(
-                  child: Theme(
-                    data: ThemeData(
-                      primaryColor: Colors.teal,
-                      inputDecorationTheme: InputDecorationTheme(
-                        labelStyle: TextStyle(
-                          color: Colors.teal,
-                          fontSize: 15,
+                  Form(
+                    child: Theme(
+                      data: ThemeData(
+                        primaryColor: Colors.teal,
+                        inputDecorationTheme: InputDecorationTheme(
+                          labelStyle: TextStyle(
+                            color: Colors.teal,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(40.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              // autofocus: true,
+                              controller: controllerID,
+                              decoration: InputDecoration(labelText: 'Enter "ID"'),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            TextField(
+                              controller: controllerPW,
+                              decoration:
+                                  InputDecoration(labelText: 'Enter "PW"'),
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
+                            ),
+                            SizedBox(
+                              height: 40.0,
+                            ),
+                            ButtonTheme(
+                              minWidth: 100.0,
+                              height: 50.0,
+                              child: RaisedButton(
+                                color: Colors.orangeAccent,
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 35.0,
+                                ),
+                                onPressed: () {
+                                  if (controllerID.text == 'ID' &&
+                                      controllerPW.text == 'PW') {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                Dice()));
+                                  } else if (controllerID.text == 'ID' &&
+                                      controllerPW.text != 'PW') {
+                                    showSnackBar2(context);
+                                  } else if (controllerID.text != 'ID' &&
+                                      controllerPW.text == 'PW') {
+                                    showSnackBar3(context);
+                                  } else {
+                                    showSnackBar(context);
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.all(40.0),
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: controllerID,
-                            decoration: InputDecoration(labelText: 'Enter ID'),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          TextField(
-                            controller: controllerPW,
-                            decoration:
-                                InputDecoration(labelText: 'Enter Password'),
-                            keyboardType: TextInputType.text,
-                            obscureText: true,
-                          ),
-                          SizedBox(
-                            height: 40.0,
-                          ),
-                          ButtonTheme(
-                            minWidth: 100.0,
-                            height: 50.0,
-                            child: RaisedButton(
-                              color: Colors.orangeAccent,
-                              child: Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 35.0,
-                              ),
-                              onPressed: () {
-                                if (controllerID.text == 'ID' &&
-                                    controllerPW == 'PW') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Dice()));
-                                } else if (controllerID == 'ID' &&
-                                    controllerPW != 'PW') {
-                                  showSnackBar2(context);
-                                } else if (controllerID != 'ID' &&
-                                    controllerPW == 'PW') {
-                                  showSnackBar3(context);
-                                } else {
-                                  showSnackBar(context);
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
